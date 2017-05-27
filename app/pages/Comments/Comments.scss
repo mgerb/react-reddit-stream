@@ -1,0 +1,11 @@
+@import '../../scss/variables.scss';
+
+.comment__container {
+    min-height: 50px;
+    background-color: $light3;
+    padding: 10px;
+
+    & + & {
+        margin-top: 5px;
+    }
+}

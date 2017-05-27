@@ -1,0 +1,27 @@
+html {
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+body {
+    color: $fontPrimary;
+    background-color: $light2;
+}
+
+.fa {
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+a {
+    text-decoration: none;
+    color: $fontPrimary;
+    transition: all 0.1s linear;
+    
+    &:hover {
+        color: $primaryBlue;
+    }
+}
+
+.font--small {
+    font-size: x-small;
+}

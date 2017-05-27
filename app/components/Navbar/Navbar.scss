@@ -1,0 +1,42 @@
+@import '../../scss/variables';
+
+.Navbar__nav {
+    height: 40px;
+    border-bottom: 1px solid $light3;
+    display: flex;
+    background-color: $light1;
+}
+
+.Navbar__header {
+    display: flex;
+    height: 50px;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: $dark2;
+}
+
+.Navbar__item {
+    color: $fontPrimary;
+    text-decoration: none;
+    width: 100px;
+    transition: all 0.1s linear;
+    text-align: center;
+    line-height: 40px;
+    
+    &:hover {
+        color: $fontSecondary;
+        border-bottom: 2px solid $primaryBlue; 
+    }
+    
+    & + .Navbar__item {
+        border-left: 1px solid $light3;
+    }
+    
+}
+
+.Navbar__item--active {
+    color: $fontSecondary;
+    border-bottom: 2px solid $primaryBlue;
+}
