@@ -14,11 +14,11 @@ body {
 
 a {
     text-decoration: none;
-    color: $fontPrimary;
+    color: $primaryBlue;
     transition: all 0.1s linear;
     
     &:hover {
-        color: $primaryBlue;
+        color: $red;
     }
 }
 

@@ -3,36 +3,3 @@
 .Home {
     padding: 10px;
 }
-
-.post__container {
-    display: flex;
-    height: 85px;
-    background-color: $light3;
-    padding: 10px;
-    border-radius: 4px;
-    & + & {
-        margin-top: 5px;
-    }
-}
-
-.post__container--nsfw {
-    border: 1px solid $red;
-}
-
-.post__content__container {
-    flex: 1;
-    padding: 10px;
-}
-
-.thumbnail {
-    width: 100%;
-    min-width: 70px;
-    height: auto;
-}
-
-.thumbnail__container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 70px;
-}

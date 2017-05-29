@@ -3,6 +3,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import moment from 'moment';
 import redditAPI from '../../api/reddit.api';
 import { PostType, CommentType } from '../../model';
+import RedditPost from '../../components/RedditPost/RedditPost';
 
 import './Comments.scss';
 
@@ -30,8 +31,6 @@ export default class Comments extends React.Component<Props, State> {
                 comments: response[1].data.children,
                 post: response[0].data.children[0],
             });
-
-            console.log(this.state);
         });
     }
 
@@ -42,13 +41,13 @@ export default class Comments extends React.Component<Props, State> {
                 return;
             }
             return (
-                <div key={index} className="comment__container">
+                <div key={index} className="comment">
                     <div className="font--small">
-                        <span>{comment.data.author} </span>
+                        <a href="">{comment.data.author} </a>
                         <span>{comment.data.score} {comment.data.score !== 1 ? 'points' : 'point'}</span>
                         <span> {moment.unix(comment.data.created_utc).fromNow()}</span>
                     </div>
-                    <div>{comment.data.body}</div>
+                    <div style={{marginTop:'5px'}}>{comment.data.body}</div>
 
                     {comment.data.replies && comment.data.replies.data.children.length > 0 && this.insertComments(comment.data.replies.data.children)}
                 </div>
@@ -59,7 +58,10 @@ export default class Comments extends React.Component<Props, State> {
     render() {
         return (
             <div style={{padding:'10px'}}>
-                {this.insertComments(this.state.comments)}
+                {this.state.post && <RedditPost post={this.state.post}/>}
+                <div className="comments__container">
+                    {this.insertComments(this.state.comments)}
+                </div>
             </div>
         );
     }

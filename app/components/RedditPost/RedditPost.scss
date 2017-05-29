@@ -1,0 +1,42 @@
+@import '../../scss/variables.scss';
+
+.post__container {
+    display: flex;
+    min-height: 85px;
+    background-color: $dark2;
+    padding: 10px;
+    border-radius: 4px;
+    & + & {
+        margin-top: 5px;
+    }
+}
+
+.post__container--nsfw {
+    border: 1px solid $red;
+}
+
+.post__content__container {
+    flex: 1;
+    padding: 10px;
+}
+
+.item__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+}
+
+.item__container--thumbnail {
+    width: 70px;
+}
+
+.item__container--index {
+    width: 20px;
+}
+
+.thumbnail {
+    width: 100%;
+    min-width: 70px;
+    height: auto;
+}

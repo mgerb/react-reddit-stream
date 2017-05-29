@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import './Navbar.scss';
 
@@ -28,8 +28,21 @@ export default class Navbar extends React.Component<Props, State> {
                 </div>
                 
                 <div className="Navbar__nav">
-                    <NavLink to="/" className="Navbar__item" exact activeClassName="Navbar__item--active">Home</NavLink>
+                    <NavLink to="/r/all" className="Navbar__item" exact activeClassName="Navbar__item--active">All</NavLink>
+                    <NavLink to="/r/popular" className="Navbar__item" exact activeClassName="Navbar__item--active">Popular</NavLink>
                     {/*<NavLink to="/new" className="Navbar__item" exact activeClassName="Navbar__item--active">New</NavLink>*/}
+
+                    <div className="Navbar__item Navbar__dropdown">
+                        <span>Top</span>
+                        <div className="Navbar__dropdown__list">
+                            <Link to="?sort=top&t=hour" className="Navbar__dropdown__list__item">past hour</Link>
+                            <Link to="?sort=top&t=day" className="Navbar__dropdown__list__item">past 24 hours</Link>
+                            <Link to="?sort=top&t=week" className="Navbar__dropdown__list__item">past week</Link>
+                            <Link to="?sort=top&t=month" className="Navbar__dropdown__list__item">past month</Link>
+                            <Link to="?sort=top&t=year" className="Navbar__dropdown__list__item">past year</Link>
+                            <Link to="?sort=top&t=all" className="Navbar__dropdown__list__item">all time</Link>
+                        </div>
+                    </div>
                 </div>
             </div>
         );

@@ -6,6 +6,7 @@ export interface PostType {
         created_utc: number;
         domain: string;
         num_comments: number;
+        name: string;
         permalink: string;
         over_18: boolean;
         score: number;

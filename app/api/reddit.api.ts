@@ -3,8 +3,13 @@ import { PostType } from '../model';
 
 class reddit {
 
-    getSubReddit(subReddit: string): Promise<Array<PostType>> {
-        return api.get(`/r/${subReddit}.json`).then((response: any) => {
+    getPosts(subReddit: string, search?: string, after?: string): Promise<Array<PostType>> {
+        let url = `/r/${subReddit}`;
+
+        url += search ? `/top/.json${search}&` : '.json?';
+        url += after ? `after=${after}&count=25` : '';
+
+        return api.get(url).then((response: any) => {
             return response.data.data.children;
         });
     }

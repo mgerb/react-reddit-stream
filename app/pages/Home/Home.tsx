@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import moment from 'moment';
+import { RouteComponentProps } from 'react-router-dom';
+import inView from 'in-view';
 import redditAPI from '../../api/reddit.api';
 import { PostType } from '../../model';
+import RedditPost from '../../components/RedditPost/RedditPost';
 
 import './Home.scss';
 
@@ -17,6 +18,8 @@ interface State {
 
 export default class Home extends React.Component<Props, State> {
 
+    private postsLoaded: boolean = false;
+
     constructor(props: Props){
         super(props);
         this.state = {
@@ -26,20 +29,43 @@ export default class Home extends React.Component<Props, State> {
     }
 
     componentDidMount() {
-        this.loadData(this.props.match.params.subreddit);
+        this.loadPosts(this.props.match.params.subreddit, this.props.location.search);
+        console.log(this.props);
+
+
+        inView('.in-view').on('enter', () => {
+            if (this.postsLoaded) {
+                this.loadMorePosts(this.props.match.params.subreddit, this.state.posts[this.state.posts.length-1].data.name);
+            }
+        });
     }
 
     componentWillReceiveProps(nextProps: Props) {
-        if (this.props.match.params.subreddit !== nextProps.match.params.subreddit) {
-            this.loadData(nextProps.match.params.subreddit);
+        if (this.props.match.params.subreddit !== nextProps.match.params.subreddit ||
+            this.props.location.search !== nextProps.location.search) {
+            this.loadPosts(nextProps.match.params.subreddit, nextProps.location.search);
         }
     }
 
-    loadData(subreddit: string) {
-        redditAPI.getSubReddit(subreddit).then((response) => {
+    loadPosts(subreddit: string, search: string) {
+        redditAPI.getPosts(subreddit, search).then((response) => {
             console.log(response);
             this.setState({
                 posts: response,
+                badSubReddit: false,
+            });
+            this.postsLoaded = true;
+        }).catch(() => {
+            this.setState({
+                badSubReddit: true,
+            });
+        });
+    }
+
+    loadMorePosts(subreddit: string, after: string) {
+        redditAPI.getPosts(subreddit, this.props.location.search, after).then((response) => {
+            this.setState({
+                posts: [...this.state.posts, ...response],
                 badSubReddit: false,
             });
         }).catch(() => {
@@ -51,29 +77,7 @@ export default class Home extends React.Component<Props, State> {
 
     insertPosts() {
         return this.state.posts.map((post: PostType, index: number) => {
-            const createdTime = moment.unix(post.data.created_utc).fromNow();
-
-            return (<div className={'post__container ' + (post.data.over_18 ? 'post__container--nsfw' : '')} key={index}>
-                        <div className="thumbnail__container">
-                            {post.data.score}
-                        </div>
-                        <div className="thumbnail__container">
-                            { !post.data.thumbnail.match(/^default$|^image$|^self$|^nsfw$/) &&
-                                <img src={post.data.thumbnail} className="thumbnail"/>
-                            }
-                        </div>
-
-                        <div className="post__content__container">
-                            <a href={post.data.url}>{post.data.title}</a>
-                            <div className="font--small">({post.data.domain})</div>
-                            <div className="font--small">submitted {createdTime} by
-                                <a href={'https://www.reddit.com/u/' + post.data.author}> {post.data.author}</a> to
-                                <Link to={post.data.subreddit}> r/{post.data.subreddit}</Link>
-                            </div>
-                            <Link to={`/comments/${post.data.id}`}>{post.data.num_comments} comments</Link>
-                        </div>
-                    </div>
-            );
+            return (<RedditPost key={index} index={index + 1} post={post}/>);
         });
     }
 
@@ -85,6 +89,8 @@ export default class Home extends React.Component<Props, State> {
                         You have entered an invalid subreddit!
                     </div>
                 : this.insertPosts()}
+
+                <div className="in-view"></div>
             </div>
         );
     }

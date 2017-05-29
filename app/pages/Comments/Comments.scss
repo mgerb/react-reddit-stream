@@ -1,11 +1,20 @@
 @import '../../scss/variables.scss';
 
-.comment__container {
+.comment {
     min-height: 50px;
-    background-color: $light3;
     padding: 10px;
+    background-color: $dark2;
+    border-radius: 4px;
 
     & + & {
         margin-top: 5px;
     }
+
+    & & {
+        border-left: 1px solid $dark1;
+    }
+}
+
+.comments__container {
+    margin-top: 10px;
 }

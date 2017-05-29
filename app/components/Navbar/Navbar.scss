@@ -1,5 +1,8 @@
 @import '../../scss/variables';
 
+$itemWidth: 100px;
+$itemHeight: 50px;
+
 .Navbar__nav {
     height: 40px;
     border-bottom: 1px solid $light3;
@@ -9,7 +12,7 @@
 
 .Navbar__header {
     display: flex;
-    height: 50px;
+    height: $itemHeight;
     align-items: center;
     justify-content: space-between;
     padding-left: 10px;
@@ -20,7 +23,7 @@
 .Navbar__item {
     color: $fontPrimary;
     text-decoration: none;
-    width: 100px;
+    width: $itemWidth;
     transition: all 0.1s linear;
     text-align: center;
     line-height: 40px;
@@ -39,4 +42,31 @@
 .Navbar__item--active {
     color: $fontSecondary;
     border-bottom: 2px solid $primaryBlue;
+}
+
+.Navbar__dropdown {
+    position: relative;
+    cursor: pointer;
+
+    &:hover .Navbar__dropdown__list {
+        display: initial;
+    }
+}
+
+.Navbar__dropdown__list {
+    background: $light1;
+    display: none;
+    position: absolute;
+    width: $itemWidth;
+    bottom: -242px;
+    right: 0;
+
+    &:hover {
+        display: initial;
+    }
+}
+
+.Navbar__dropdown__list__item {
+    display: block;
+    cursor: pointer;
 }
